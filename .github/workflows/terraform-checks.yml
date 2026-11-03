@@ -1,0 +1,55 @@
+name: Terraform checks
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  TERRAFORM_VERSION: "1.17.1"
+  TFLINT_VERSION: "v0.65.0"
+  TF_IN_AUTOMATION: "true"
+
+jobs:
+  checks:
+    name: fmt, validate, tflint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v6
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+          terraform_wrapper: false
+
+      - name: Set up TFLint
+        uses: terraform-linters/setup-tflint@v6
+        with:
+          tflint_version: ${{ env.TFLINT_VERSION }}
+
+      - name: Cache Terraform providers and TFLint plugins
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.terraform.d/plugin-cache
+            ~/.tflint.d/plugins
+          key: terraform-${{ runner.os }}-${{ hashFiles('breakfix/**/.terraform.lock.hcl', '.tflint.hcl') }}
+
+      - name: terraform fmt (whole repository)
+        run: terraform fmt -check -recursive -diff
+
+      - name: terraform validate and tflint (every lab in breakfix/)
+        run: scripts/check-labs.sh
+        env:
+          # TFLint downloads the AWS ruleset from GitHub; the token avoids rate limits.
+          GITHUB_TOKEN: ${{ github.token }}
