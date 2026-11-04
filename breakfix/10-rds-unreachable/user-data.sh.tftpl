@@ -1,0 +1,46 @@
+#!/bin/bash
+# orders-app server. The app reads its database endpoint from /etc/orders-app.env.
+set -euo pipefail
+
+cat >/etc/orders-app.env <<ENV
+DB_HOST=${db_host}
+DB_PORT=5432
+ENV
+
+# Connectivity check the app team uses: "can we open a TCP connection to the database?"
+cat >/usr/local/bin/check-db <<'SH'
+#!/bin/bash
+source /etc/orders-app.env
+if timeout 5 bash -c "</dev/tcp/$DB_HOST/$DB_PORT" 2>/dev/null; then
+  echo "OK: connected to $DB_HOST:$DB_PORT"
+else
+  echo "FAIL: no TCP connection to $DB_HOST:$DB_PORT within 5 seconds"
+  exit 1
+fi
+SH
+chmod 755 /usr/local/bin/check-db
+
+# The app's health check runs every minute; see `journalctl -u orders-db-check`.
+cat >/etc/systemd/system/orders-db-check.service <<'UNIT'
+[Unit]
+Description=orders-app database connectivity check
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/check-db
+UNIT
+
+cat >/etc/systemd/system/orders-db-check.timer <<'UNIT'
+[Unit]
+Description=Run the orders-app database check every minute
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=1min
+
+[Install]
+WantedBy=timers.target
+UNIT
+
+systemctl daemon-reload
+systemctl enable --now orders-db-check.timer
