@@ -7,3 +7,4 @@ crash.log
 
 # Lambda packages built by the archive provider in breakfix labs
 build/
+*:Zone.Identifier
