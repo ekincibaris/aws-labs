@@ -1,8 +1,17 @@
 # AWS Labs
 
-Hands-on AWS labs built with Terraform, used to prepare for the **AWS Certified CloudOps Engineer – Associate (SOA-C03)** exam. Most of them are troubleshooting exercises: deploy something broken, find out why, fix it.
+Hands-on AWS labs with Terraform and the AWS CLI. Each one is built, broken or tested, then destroyed. I'm using them to build real operations skills and to prepare for the **AWS Certified CloudOps Engineer – Associate (SOA-C03)** exam.
 
 > **About `breakfix/`:** the scenarios in [`breakfix/`](breakfix/) are **generated practice exercises**. They are not real incidents or official AWS material. Each one deploys a small setup with one deliberate fault. My own diagnosis notes live in [`notes/`](notes/).
+
+## Labs I built
+
+| Lab | What I did | Tool |
+|---|---|---|
+| [`01-ec2-cli`](01-ec2-cli/) | Launched an EC2 instance, connected over SSH, cleaned up and verified nothing was left | AWS CLI |
+| [`02-hello-terraform`](02-hello-terraform/) | First Terraform run: init, plan, apply, destroy | Terraform |
+| [`nacl-break-fix`](nacl-break-fix/) | Broke and fixed a custom network ACL: stateless rules and ephemeral ports | Terraform |
+| [`cloudwatch-agent-procstat`](cloudwatch-agent-procstat/) | CloudWatch agent with procstat, and an alarm that emails me when a process stops | Terraform |
 
 ## Labs
 
