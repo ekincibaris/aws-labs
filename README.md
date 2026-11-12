@@ -2,7 +2,7 @@
 
 Hands-on AWS labs with Terraform and the AWS CLI. Each one is built, broken or tested, then destroyed. I'm using them to build real operations skills and to prepare for the **AWS Certified CloudOps Engineer – Associate (SOA-C03)** exam.
 
-> **About `breakfix/`:** the scenarios in [`breakfix/`](breakfix/) are **generated practice exercises**. They are not real incidents or official AWS material. Each one deploys a small setup with one deliberate fault. My own diagnosis notes live in [`notes/`](notes/).
+> **About `breakfix/`:** these are **generated practice scenarios**, not real incidents or official AWS material. Each one deploys a small setup with one deliberate fault. I'm working through them one at a time; my diagnosis notes are added to [`notes/`](notes/) as I solve each one.
 
 ## Labs I built
 
@@ -82,26 +82,6 @@ terraform apply
   ```
 
 - Never commit `terraform.tfstate` or `terraform.tfvars`. `.gitignore` already excludes them.
-
-## Progress checklist
-
-- [ ] `02-hello-terraform`
-- [ ] `nacl-break-fix`
-- [ ] `00-budget-guardrail` (keep deployed)
-- [ ] `01-alb-502-bad-gateway`
-- [ ] `02-asg-not-scaling`
-- [ ] `03-s3-access-denied`
-- [ ] `04-cloudwatch-alarm-silent`
-- [ ] `05-ssm-instance-missing`
-- [ ] `06-ecs-task-not-starting`
-- [ ] `07-eventbridge-rule-not-firing`
-- [ ] `08-lambda-vpc-timeout`
-- [ ] `09-cloudfront-stale-content`
-- [ ] `10-rds-unreachable`
-- [ ] `11-flow-logs-blocked-connection`
-- [ ] `12-config-remediation-failing`
-
-Tick a lab once its notes are in `notes/` and `terraform destroy` has run.
 
 ## Repository layout
 
