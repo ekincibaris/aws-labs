@@ -13,12 +13,10 @@ Hands-on AWS labs with Terraform and the AWS CLI. Each one is built, broken or t
 | [`nacl-break-fix`](nacl-break-fix/) | Broke and fixed a custom network ACL: stateless rules and ephemeral ports | Terraform |
 | [`cloudwatch-agent-procstat`](cloudwatch-agent-procstat/) | CloudWatch agent with procstat, and an alarm that emails me when a process stops | Terraform |
 
-## Labs
+## Practice scenarios (breakfix)
 
 | Lab | Symptom / topic | SOA-C03 domain | Difficulty | Cost |
 |---|---|---|---|---|
-| [`02-hello-terraform`](02-hello-terraform/) | First Terraform run: one output, no AWS resources | 3 · skill 3.1.6 | Easy | €0.00/h |
-| [`nacl-break-fix`](nacl-break-fix/) | Break/fix with a custom network ACL: stateless rules, ephemeral ports | 5 · task 5.3 | Medium | ≈ €0.02/h |
 | [`breakfix/00-budget-guardrail`](breakfix/00-budget-guardrail/) | €5/month budget; billing alarm stuck on *Insufficient data*. **Deploy first, keep it.** | 1 · task 1.1 | Easy | €0.00/h |
 | [`breakfix/01-alb-502-bad-gateway`](breakfix/01-alb-502-bad-gateway/) | Shop behind an ALB returns 502 Bad Gateway | 2 · task 2.2 | Easy | ≈ €0.07/h |
 | [`breakfix/02-asg-not-scaling`](breakfix/02-asg-not-scaling/) | Auto Scaling group doesn't scale out under load | 2 · task 2.1 | Easy | ≈ €0.05–0.14/h |
